@@ -39,7 +39,6 @@
 		5240B8F220FFB2BC00444D6A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5240B8F420FFB2BC00444D6A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5240B8FB20FFBAB100444D6A /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		5240B8FD20FFC5FB00444D6A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		52E5C47E2103A72A009BC121 /* Destination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Destination.swift; sourceTree = "<group>"; };
 		52EBB0BB2100EE5300A999C7 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		52EBB0BD21010DAD00A999C7 /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
@@ -96,7 +95,6 @@
 				5240B8EF20FFB2BC00444D6A /* Assets.xcassets */,
 				5240B8F120FFB2BC00444D6A /* LaunchScreen.storyboard */,
 				5240B8F420FFB2BC00444D6A /* Info.plist */,
-				5240B8FD20FFC5FB00444D6A /* README.md */,
 			);
 			path = DiscoveryApp;
 			sourceTree = "<group>";
