@@ -147,6 +147,38 @@ class ViewController: UIViewController {
 
 }
 
+
+extension ViewController:UICollectionViewDelegate{
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        
+        //Get the cell's width plus spacing
+        let cellWidthIncludingSpacing = cellSize.width + cellSpacing
+        
+        
+        //This is the expected offset when the collectionView's scrollView stops scrolling.
+        //The new offset after a scroll action has been perfomed
+        var offset = targetContentOffset.pointee
+        
+        //The index is calculated by taking the distance (offset.x) from x = 0 (origin.x) divided by the cellWidthIncludingSpacing.
+        //for example if offset.x = 750 and  cellWidthIncludingSpacing = 316 then the index = 737 / 316 = 2.332278...
+        //The value here is in CGFloat
+        let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+        
+        //Here we round the index to get a whole number
+        //for example if we round 2.332278 we'll get 2
+        let roundedIndex = round(index)
+        
+        //Now we calculate the new offset based on the rounded index to make the cell centered
+        offset = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left, y: -scrollView.contentInset.top)
+        
+        //Last we set the new offset.
+        targetContentOffset.pointee = offset
+        
+    }
+    
+}
+
 extension ViewController:UICollectionViewDataSource{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
