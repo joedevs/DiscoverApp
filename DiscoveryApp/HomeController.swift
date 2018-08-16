@@ -8,11 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class HomeController: UIViewController {
+    
     let cellId = "cell"
     let xInset:CGFloat = 30
     let cellSpacing:CGFloat = 1
+    let animator = Animator()
     
     var destinations = [Destination](){
         didSet{
@@ -78,7 +79,7 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
-
+        
     }()
     
     
@@ -90,7 +91,7 @@ class ViewController: UIViewController {
         setup()
         loadDestinations()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -106,8 +107,6 @@ class ViewController: UIViewController {
         
         destinations =  localDestinations
     }
-    
-    
     
     func setup() {
         
@@ -144,11 +143,11 @@ class ViewController: UIViewController {
         collectionView.leadingAnchor.constraint(equalTo:  view.leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
-
+    
 }
 
 
-extension ViewController:UICollectionViewDelegate{
+extension HomeController:UICollectionViewDelegate{
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         
@@ -177,9 +176,28 @@ extension ViewController:UICollectionViewDelegate{
         
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? Cell{
+            let dc = DetailsController()
+            dc.transitioningDelegate = self
+            dc.imageView.image = destinations[indexPath.item].image
+            animator.initialFrame = view.convert(cell.destImageView.frame, from: cell)
+            animator.finalFrame = dc.imageViewFrame
+            present(dc, animated: true, completion: nil)
+        }
+        
+        if indexPath.item - 1 > 0{
+            cellBeforeSelectedCell = collectionView.cellForItem(at: IndexPath(item: indexPath.item - 1, section: 0)) as? Cell
+        }
+        
+        if indexPath.item + 1 < destinations.count{
+            cellAfterSelectedCell = collectionView.cellForItem(at: IndexPath(item: indexPath.item + 1, section: 0)) as? Cell
+        }
+    }
 }
 
-extension ViewController:UICollectionViewDataSource{
+extension HomeController:UICollectionViewDataSource{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -200,7 +218,7 @@ extension ViewController:UICollectionViewDataSource{
 }
 
 
-extension ViewController:UICollectionViewDelegateFlowLayout{
+extension HomeController:UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return cellSize
@@ -214,6 +232,22 @@ extension ViewController:UICollectionViewDelegateFlowLayout{
         return UIEdgeInsets(top: 0, left: xInset, bottom: 0, right: xInset)
     }
 }
+
+extension HomeController:UIViewControllerTransitioningDelegate{
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        animator.isPresenting = true
+        
+        
+        return animator
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        animator.isPresenting = false
+        return animator
+    }
+}
+
 
 
 
