@@ -107,6 +107,8 @@ class ViewController: UIViewController {
         destinations =  localDestinations
     }
     
+    
+    
     func setup() {
         
         //First add the field to the parent view which is self.
